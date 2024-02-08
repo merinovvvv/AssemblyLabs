@@ -8,6 +8,7 @@
 #include <iostream>
 
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 
 
@@ -27,7 +28,7 @@ public:
     static void move(int &a, int &b);
 
 private:
-    static std::shared_ptr<spdlog::logger> file_logger3;
+    static std::shared_ptr<spdlog::logger> file_logger2;
 };
 
 #endif //LAB01_OPERATION_H

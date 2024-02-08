@@ -9,21 +9,16 @@
 #include "Operation.h"
 
 
-std::shared_ptr<spdlog::logger> Parser::file_logger1 = spdlog::basic_logger_mt("dataParser_logger",
+std::shared_ptr<spdlog::logger> Parser::file_logger1 = spdlog::basic_logger_mt("parser_logger",
                                                                                "../files/spdlog.txt");
-std::shared_ptr<spdlog::logger> Parser::file_logger2 = spdlog::basic_logger_mt("codeParser_logger",
-                                                                               "../files/spdlog.txt");
-
-
 Parser::Parser() {
-    file_logger1->set_level(spdlog::level::debug);
-    file_logger2->set_level(spdlog::level::debug);
-
+    file_logger1->set_level(spdlog::level::trace);
+    result = 0;
 }
 
 std::map<std::string, int> Parser::dataParser(const std::string &filePath) {
 
-    file_logger1->debug("dataParser func.");
+    file_logger1->trace("dataParser func.");
 
     std::vector<std::string> list;
     std::string str;
@@ -70,7 +65,7 @@ std::map<std::string, int> Parser::dataParser(const std::string &filePath) {
 
 void Parser::clearStr(std::string &str) {
 
-    file_logger1->debug("clearStr func.");
+    file_logger1->trace("clearStr func.");
 
     for (size_t i = 0; i < str.size(); ++i) {
         /*std::string wordToRemove = ".data";
@@ -98,7 +93,7 @@ void Parser::clearStr(std::string &str) {
 
 bool Parser::isNumber(const std::string &str) {
 
-    file_logger1->debug("isNumber func.");
+    file_logger1->trace("isNumber func.");
 
     if (str.empty()) {
         return false;
@@ -114,7 +109,7 @@ bool Parser::isNumber(const std::string &str) {
 }
 
 int Parser::codeParser(const std::string &filePath) {
-    file_logger2->debug("codeParser func.");
+    file_logger1->trace("codeParser func.");
 
     std::vector<std::string> list;
     std::string str;
@@ -182,7 +177,8 @@ int Parser::codeParser(const std::string &filePath) {
 }
 
 void Parser::writeToFile (const std::string& filePath) const {
-    std::ofstream fout (filePath, std::ios::app);
+    file_logger1->trace("writeToFile func.");
+    std::ofstream fout (filePath, std::ios::in);
     fout << "The result equals to: ";
     fout << result;
     fout << '\n';

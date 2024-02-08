@@ -12,6 +12,7 @@
 #include <iostream>
 
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
 
 class Parser {
@@ -25,7 +26,6 @@ private:
     void clearStr (std::string& str);
     bool isNumber (const std::string& str);
     static std::shared_ptr<spdlog::logger> file_logger1;
-    static std::shared_ptr<spdlog::logger> file_logger2;
     std::string questVar;
     std::map <std::string, int> res;
     int result;
