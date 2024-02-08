@@ -151,7 +151,8 @@ int Parser::codeParser(const std::string &filePath) {
 
 
         if (operation == "end") {
-            return res[questVar];
+            result = res[questVar];
+            return result;
         }
         else if (operation == "mov") {
             int a = res[op1];
@@ -178,4 +179,11 @@ int Parser::codeParser(const std::string &filePath) {
             throw std::invalid_argument("Wrong operation.");
         }
     }
+}
+
+void Parser::writeToFile (const std::string& filePath) const {
+    std::ofstream fout (filePath, std::ios::app);
+    fout << "The result equals to: ";
+    fout << result;
+    fout << '\n';
 }

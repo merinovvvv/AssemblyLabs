@@ -20,5 +20,7 @@ int main() {
 
     int result = pars.codeParser("../files/input.txt");
 
+    pars.writeToFile("../files/output.txt");
+
     std::cout << result;
 }

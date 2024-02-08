@@ -20,6 +20,7 @@ public:
     Parser();
     std::map <std::string, int> dataParser(const std::string& filePath);
     int codeParser(const std::string& filePath);
+    void writeToFile (const std::string& filePath) const;
 private:
     void clearStr (std::string& str);
     bool isNumber (const std::string& str);
@@ -27,6 +28,7 @@ private:
     static std::shared_ptr<spdlog::logger> file_logger2;
     std::string questVar;
     std::map <std::string, int> res;
+    int result;
 
 };
 
