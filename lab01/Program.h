@@ -11,6 +11,7 @@
 #include <sstream>
 #include <iostream>
 
+#include "Operation.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/sinks/basic_file_sink.h"
@@ -28,7 +29,7 @@ private:
     void clearStr (std::string& str);
     bool isNumber (const std::string& str);
     static std::shared_ptr<spdlog::logger> file_logger1;
-    std::string questVar; //TODO SET
+    std::string questVar;
     std::map <std::string, int> res;
     int result;
 };

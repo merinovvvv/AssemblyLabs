@@ -4,11 +4,13 @@
 
 #include "Operation.h"
 
-std::shared_ptr<spdlog::logger> Operation::file_logger2 = spdlog::basic_logger_mt("operation_logger", "../files/spdlog.txt");
 
-Operation::Operation() {
-    file_logger2 ->set_level(spdlog::level::trace);
-}
+
+std::shared_ptr<spdlog::logger> Operation::file_logger2 = []() {
+    std::shared_ptr<spdlog::logger> file_logger2 = spdlog::basic_logger_mt("Operation_logger", "../files/spdlog.txt");
+    file_logger2->set_level(spdlog::level::trace);
+    return file_logger2;
+}();
 
 int Operation::multiplication(const int& a, const int& b) {
     file_logger2->trace("multiplication func.");

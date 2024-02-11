@@ -6,7 +6,6 @@
 #include <algorithm>
 
 #include "Program.h"
-#include "Operation.h"
 
 
 std::shared_ptr<spdlog::logger> Program::file_logger1 = spdlog::basic_logger_mt("Program_logger",
