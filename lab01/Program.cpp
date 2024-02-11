@@ -5,20 +5,20 @@
 #include <vector>
 #include <algorithm>
 
-#include "Parser.h"
+#include "Program.h"
 #include "Operation.h"
 
 
-std::shared_ptr<spdlog::logger> Parser::file_logger1 = spdlog::basic_logger_mt("parser_logger",
+std::shared_ptr<spdlog::logger> Program::file_logger1 = spdlog::basic_logger_mt("Program_logger",
                                                                                "../files/spdlog.txt");
-Parser::Parser() {
+Program::Program() {
     file_logger1->set_level(spdlog::level::trace);
     result = 0;
 }
 
-std::map<std::string, int> Parser::dataParser(const std::string &filePath) {
+std::map<std::string, int> Program::dataParser(const std::string &filePath) {
 
-    file_logger1->trace("dataParser func.");
+    file_logger1->trace("dataProgram func.");
 
     std::vector<std::string> list;
     std::string str;
@@ -63,7 +63,7 @@ std::map<std::string, int> Parser::dataParser(const std::string &filePath) {
     return result;
 }
 
-void Parser::clearStr(std::string &str) {
+void Program::clearStr(std::string &str) {
 
     file_logger1->trace("clearStr func.");
 
@@ -91,7 +91,7 @@ void Parser::clearStr(std::string &str) {
     }
 }
 
-bool Parser::isNumber(const std::string &str) {
+bool Program::isNumber(const std::string &str) {
 
     file_logger1->trace("isNumber func.");
 
@@ -108,8 +108,8 @@ bool Parser::isNumber(const std::string &str) {
     return pos < str.size() && std::all_of(str.begin() + pos, str.end(), ::isdigit);
 }
 
-int Parser::codeParser(const std::string &filePath) {
-    file_logger1->trace("codeParser func.");
+void Program::codeParser(const std::string &filePath) {
+    file_logger1->trace("codeProgram func.");
 
     std::vector<std::string> list;
     std::string str;
@@ -147,7 +147,6 @@ int Parser::codeParser(const std::string &filePath) {
 
         if (operation == "end") {
             result = res[questVar];
-            return result;
         }
         else if (operation == "mov") {
             int a = res[op1];
@@ -176,10 +175,33 @@ int Parser::codeParser(const std::string &filePath) {
     }
 }
 
-void Parser::writeToFile (const std::string& filePath) const {
+void Program::writeToFile (const std::string& filePath) const {
     file_logger1->trace("writeToFile func.");
     std::ofstream fout (filePath, std::ios::in);
     fout << "The result equals to: ";
     fout << result;
     fout << '\n';
+}
+
+int Program::getResult() const {
+    return result;
+}
+
+int Program::main() {
+    Program a;
+    std::map <std::string, int> assemblyData = a.dataParser("../files/input.txt");
+
+    /*for (const auto& pair : assemblyData) {
+        std::cout << pair.first << ": " << pair.second << '\n';
+    }*/
+
+    a.codeParser("../files/input.txt");
+
+    a.writeToFile("../files/output.txt");
+
+    int answer = a.getResult();
+
+    std::cout << answer;
+
+    return 0;
 }

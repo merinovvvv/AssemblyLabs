@@ -16,6 +16,7 @@ class Operation {
 public:
 
     Operation();
+    ~Operation() = default;
 
     static int multiplication(const int &a, const int &b);
 
