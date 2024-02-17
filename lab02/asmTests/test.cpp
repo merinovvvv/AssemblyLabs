@@ -78,7 +78,7 @@ TEST(ex4Test, test1) {
 	int16_t B2 = 0;
 	int16_t B3 = 0;
 
-	std::vector <int16_t> res = ex4 (A1, A2, A3, B1, B2, B3);
+	std::vector <uint16_t> res = ex4 (A1, A2, A3, B1, B2, B3);
 
 	EXPECT_EQ(res[0], 0);
 	EXPECT_EQ(res[1], 0);
@@ -97,7 +97,7 @@ TEST(ex4Test, test2) {
 	int16_t B2 = 8;
 	int16_t B3 = 7;
 
-	std::vector <int16_t> res = ex4(A1, A2, A3, B1, B2, B3);
+	std::vector <uint16_t> res = ex4(A1, A2, A3, B1, B2, B3);
 
 	EXPECT_EQ(res[0], 18);
 	EXPECT_EQ(res[1], 16);
@@ -115,7 +115,7 @@ TEST(ex4Test, test3) {
 	int16_t B2 = 6;
 	int16_t B3 = 3;
 
-	std::vector <int16_t> res = ex4(A1, A2, A3, B1, B2, B3);
+	std::vector <uint16_t> res = ex4(A1, A2, A3, B1, B2, B3);
 
 	EXPECT_EQ(res[0], 13);
 	EXPECT_EQ(res[1], 14);
