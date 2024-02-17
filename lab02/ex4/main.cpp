@@ -8,10 +8,10 @@
 int main() {
 
     spdlog::set_level(spdlog::level::trace);
-    int16_t A1, A2, A3;
-    int16_t B1, B2, B3;
+    uint16_t A1, A2, A3;
+    uint16_t B1, B2, B3;
 
-    std::map <std::string, int16_t> data = readFromFile("data.txt");
+    std::map <std::string, uint16_t> data = readFromFile("data.txt");
 
     A1 = data["A1"];
     A2 = data["A2"];
@@ -20,7 +20,7 @@ int main() {
     B2 = data["B2"];
     B3 = data["B3"];
 
-    std::vector <int16_t> result = ex4(A1, A2, A3, B1, B2, B3);
+    std::vector <uint16_t> result = ex4(A1, A2, A3, B1, B2, B3);
 
     std::cout << "Output of the number in parts in hex:\n";
 
@@ -30,6 +30,6 @@ int main() {
 
     std::cout << "Output of the number in dec:\n";
 
-    int64_t C = ((int64_t)result[2] << 32) | ((int64_t)result[1] << 16) | result[0];
+    uint64_t C = ((uint64_t)result[2] << 32) | ((uint64_t)result[1] << 16) | result[0];
     std::cout << std::dec << C;
 }

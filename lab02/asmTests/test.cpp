@@ -84,7 +84,7 @@ TEST(ex4Test, test1) {
 	EXPECT_EQ(res[1], 0);
 	EXPECT_EQ(res[2], 0);
 
-	int64_t C = ((int64_t)res[2] << 32) | ((int64_t)res[1] << 16) | res[0];
+	uint64_t C = ((uint64_t)res[2] << 32) | ((uint64_t)res[1] << 16) | res[0];
 
 	EXPECT_EQ(C, 0);
 }
@@ -103,7 +103,7 @@ TEST(ex4Test, test2) {
 	EXPECT_EQ(res[1], 16);
 	EXPECT_EQ(res[2], 14);
 
-	int64_t C = ((int64_t)res[2] << 32) | ((int64_t)res[1] << 16) | res[0];
+	uint64_t C = ((uint64_t)res[2] << 32) | ((uint64_t)res[1] << 16) | res[0];
 
 	EXPECT_EQ(C, 60130590738);
 }
@@ -121,7 +121,7 @@ TEST(ex4Test, test3) {
 	EXPECT_EQ(res[1], 14);
 	EXPECT_EQ(res[2], 6);
 
-	int64_t C = ((int64_t)res[2] << 32) | ((int64_t)res[1] << 16) | res[0];
+	uint64_t C = ((uint64_t)res[2] << 32) | ((uint64_t)res[1] << 16) | res[0];
 
 	EXPECT_EQ(C, 25770721293);
 }
