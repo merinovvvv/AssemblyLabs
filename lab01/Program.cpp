@@ -36,7 +36,7 @@ std::map<std::string, int> Program::dataParser(const std::string &filePath) {
 
     std::string variable;
     std::string value;
-    std::map<std::string, int> result;
+    std::map<std::string, int> resultMap;
 
     for (const auto &i: list) {
         std::stringstream ss(i);
@@ -46,9 +46,9 @@ std::map<std::string, int> Program::dataParser(const std::string &filePath) {
 
 
         if (isNumber(value)) {
-            result.insert(std::make_pair(variable, std::stoi(value)));
+            resultMap.insert(std::make_pair(variable, std::stoi(value)));
         } else if (value == "?") {
-            result.insert(std::make_pair(variable, 0));
+            resultMap.insert(std::make_pair(variable, 0));
             questVar = variable;
         } else {
             throw std::invalid_argument("File contains not only ? sign and numbers in the value box.");
@@ -58,8 +58,8 @@ std::map<std::string, int> Program::dataParser(const std::string &filePath) {
     /*for (const auto& pair : result) {
         std::cout << pair.first << ": " << pair.second << '\n';
     }*/
-    res = result;
-    return result;
+    res = resultMap;
+    return resultMap;
 }
 
 void Program::clearStr(std::string &str) {
@@ -116,7 +116,7 @@ void Program::codeParser(const std::string &filePath) {
 
     while (std::getline(fin, str) && str != ".code");
 
-    while (std::getline(fin, str) && str != ".code") {
+    while (std::getline(fin, str)) {
         clearStr(str);
         list.push_back(str);
     }
