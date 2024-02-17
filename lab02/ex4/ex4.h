@@ -5,9 +5,37 @@
 
 #include <vector>
 #include <cstdint>
+#include <map>
+#include <fstream>
+#include <sstream>
 
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+
+std::map <std::string, int16_t> readFromFile (const std::string& filePath){
+    std::ifstream fin(filePath, std::ios::in);
+    std::map <std::string, int16_t> res;
+
+    if (!fin.is_open()) {
+        std::cerr << "File open error." << std::endl;
+        return res;
+    }
+
+    std::string str;
+    while (std::getline(fin, str)) {
+        if (str == ".data") {
+            continue;
+        }
+        std::istringstream iss(str);
+        std::string key, skip;
+        int16_t value;
+        iss >> key >> skip >> value;
+
+        res[key] = value;
+
+    }
+    return res;
+}
 
 std::vector <int16_t> ex4(int16_t A1, int16_t A2, int16_t A3, int16_t B1, int16_t B2, int16_t B3) {
     spdlog::trace("ex4 func. started.");
