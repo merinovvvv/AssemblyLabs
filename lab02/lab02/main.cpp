@@ -8,6 +8,8 @@
 int main() {
 	spdlog::set_level(spdlog::level::trace);
 
+	spdlog::trace("program started.");
+
 	std::string expr = "a^5 + a^3 + a";
 
 	int a;
@@ -18,4 +20,8 @@ int main() {
 	int result = ex1(a);
 
 	std::cout << "The result of the expression " << expr << " equals to : " << result << '\n';
+
+	spdlog::trace("program finished.");
+
+	return 0;
 }

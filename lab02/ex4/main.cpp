@@ -9,6 +9,9 @@ int main() {
 
     try {
         spdlog::set_level(spdlog::level::trace);
+
+        spdlog::trace("program started.");
+
         uint16_t A1, A2, A3;
         uint16_t B1, B2, B3;
 
@@ -33,9 +36,13 @@ int main() {
 
         uint64_t C = ((uint64_t)result[2] << 32) | ((uint64_t)result[1] << 16) | result[0];
         std::cout << std::dec << C;
+
+        spdlog::trace("program finished.");
     }
     catch (std::runtime_error& ex) {
         std::cerr << ex.what();
         exit(0);
     }
+
+    return 0;
 }

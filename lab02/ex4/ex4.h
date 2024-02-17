@@ -17,6 +17,7 @@ std::map <std::string, uint16_t> readFromFile (const std::string& filePath){
     std::map <std::string, uint16_t> res;
 
     if (!fin.is_open()) {
+        spdlog::error("Exception is thown (file open error).");
         throw std::runtime_error("File open error.");
         return res;
     }

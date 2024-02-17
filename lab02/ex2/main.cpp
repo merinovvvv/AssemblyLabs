@@ -11,6 +11,8 @@ int main() {
 
 		spdlog::set_level(spdlog::level::trace);
 
+		spdlog::trace("program started.");
+
 		int a;
 
 		std::cout << "input the a number: ";
@@ -21,11 +23,14 @@ int main() {
 		int result = ex2(a);
 
 		std::cout << "The result of the expression " << expr << " equals to : " << result << '\n';
+		spdlog::trace("program finished.");
 	}
 
 	catch (std::logic_error& ex) {
 		std::cerr << ex.what();
 		exit(0);
 	}
+
+	return 0;
 }
 

@@ -10,6 +10,7 @@
 int ex2(int a) {
 
 	if (a == 0) {
+		spdlog::error("Exception is thrown (division by zero).");
 		throw std::logic_error("division by zero.");
 	}
 
