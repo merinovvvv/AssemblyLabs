@@ -31,11 +31,12 @@ int main() {
         std::cout << "C1: " << std::hex << result[0] << '\n';
         std::cout << "C2: " << std::hex << result[1] << '\n';
         std::cout << "C3: " << std::hex << result[2] << '\n';
+        std::cout << "C4: " << std::hex << result[3] << '\n';
 
         std::cout << "Output of the number in dec:\n";
 
-        uint64_t C = ((uint64_t)result[2] << 32) | ((uint64_t)result[1] << 16) | result[0];
-        std::cout << std::dec << C;
+        uint64_t C = (static_cast<uint64_t>(result[3]) << 48) | (static_cast<uint64_t>(result[2]) << 32) | (static_cast<uint64_t>(result[1]) << 16) | (static_cast<uint64_t>(result[0]));
+        std::cout << std::dec << C << '\n';
 
         spdlog::trace("program finished.");
     }

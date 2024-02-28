@@ -42,24 +42,30 @@ std::vector <uint16_t> ex4(uint16_t A1, uint16_t A2, uint16_t A3, uint16_t B1, u
     spdlog::trace("ex4 func. started.");
     spdlog::debug("__asm started.");
 
-    uint16_t C1 = 0, C2 = 0, C3 = 0;
+    uint16_t C1 = 0, C2 = 0, C3 = 0, C4 = 0;
     
     __asm {
+        
+        xor cx, cx
+
         mov ax, A1
         add ax, B1
         mov C1, ax
 
-        mov ax, A2
-        adc ax, B2
-        mov C2, ax
+        mov bx, A2
+        adc bx, B2
+        mov C2, bx
 
-        mov ax, A3
-        adc ax, B3
-        mov C3, ax
+        mov dx, A3
+        adc dx, B3
+        mov C3, dx
+
+        adc cx, 0
+        mov C4, cx
     }
     spdlog::debug("__asm finished.");
 
-    std::vector <uint16_t> res = { C1, C2, C3 };
+    std::vector <uint16_t> res = { C1, C2, C3, C4 };
 
     spdlog::trace("ex4 func. finished.");
 
