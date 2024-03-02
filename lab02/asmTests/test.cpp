@@ -3,6 +3,10 @@
 #include "../ex2/ex2.h"
 #include "../ex3/ex3.h"
 #include "../ex4/ex4.h"
+#include "../ex5/ex5.h"
+#include "../ex6/ex6.h"
+#include "../ex7/ex7.h"
+#include "../ex8/ex8.h"
 
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
@@ -319,4 +323,73 @@ TEST(ex4Test, test12) {
 	uint64_t C = (static_cast<uint64_t>(res[3]) << 48) | (static_cast<uint64_t>(res[2]) << 32) | (static_cast<uint64_t>(res[1]) << 16) | (static_cast<uint64_t>(res[0]));
 
 	EXPECT_EQ(C, 562949953421310);
+}
+
+TEST(ex5Test, test1) {
+	std::pair<int, int> result = countAmountOfZeroAndEven(24680);
+	EXPECT_EQ(result.first, 1);
+	EXPECT_EQ(result.second, 5);
+}
+
+TEST(ex5Test, test2) {
+	std::pair<int, int> result = countAmountOfZeroAndEven(-13579);
+	EXPECT_EQ(result.first, 0);
+	EXPECT_EQ(result.second, 0);
+}
+
+TEST(ex5Test, test3) {
+	std::pair<int, int> result = countAmountOfZeroAndEven(0);
+	EXPECT_EQ(result.first, 1);
+	EXPECT_EQ(result.second, 1);
+}
+
+TEST(ex6Test, test1) {
+	std::pair<int, std::string> result = GcdAndFraction(15, 10);
+	EXPECT_EQ(result.first, 5); 
+	EXPECT_EQ(result.second, "3/2");
+}
+
+TEST(ex6Test, test2) {
+	ASSERT_THROW(GcdAndFraction(5, 0), std::logic_error);
+	ASSERT_THROW(GcdAndFraction(5, -3), std::logic_error);
+}
+
+TEST(ex6Test, test3) {
+	std::pair<int, std::string> result = GcdAndFraction(0, 7);
+	EXPECT_EQ(result.first, 0);
+	EXPECT_EQ(result.second, "0/1");
+}
+
+TEST(ex6Test, test4) {
+	std::pair<int, std::string> result = GcdAndFraction(123456, 7890);
+	EXPECT_EQ(result.first, 6);
+	EXPECT_EQ(result.second, "20576/1315");
+}
+
+TEST(ex7Test, test1) {
+	EXPECT_EQ(NumInDeg(2, 3), 8);
+	EXPECT_EQ(NumInDeg(3, 4), 81);
+}
+
+TEST(ex7Test, test2) {
+	EXPECT_EQ(NumInDeg(5, 0), 1);
+}
+
+TEST(ex7Test, test3) {
+	EXPECT_EQ(NumInDeg(-2, 3), -8);
+	EXPECT_EQ(NumInDeg(2, -3), 0);
+}
+
+TEST(ex8test, test1) {
+	std::pair<int, int> result = degOfTwo(10);
+	EXPECT_EQ(result.first, 3);
+	EXPECT_EQ(result.second, 4);
+
+	result = degOfTwo(16);
+	EXPECT_EQ(result.first, 4);
+	EXPECT_EQ(result.second, 5);
+}
+
+TEST(ex8test, test2) {
+	ASSERT_THROW(degOfTwo(0), std::logic_error);
 }

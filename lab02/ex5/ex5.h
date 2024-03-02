@@ -23,6 +23,7 @@ std::pair <int, int> countAmountOfZeroAndEven(int num) {
 		mov ebx, 10
 		mov eax, num
 		cmp eax, 0
+		je zeroEq
 		jl _abs
 		jmp _loop
 	_abs:
@@ -42,6 +43,12 @@ std::pair <int, int> countAmountOfZeroAndEven(int num) {
 	finish:
 		mov evenAmount, ch
 		mov zeroAmount, cl
+	jmp end_
+	zeroEq :
+		mov evenAmount, 1
+		mov zeroAmount, 1
+	end_:
+
 	}
 
 	spdlog::debug("__asm finished.");

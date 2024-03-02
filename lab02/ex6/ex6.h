@@ -62,7 +62,7 @@ std::pair <int, std::string> GcdAndFraction(int num, int den) {
 	numIsZero_ :
 		mov numerator, 0
 		mov gcd, 0
-		mov denominator, 0
+		mov denominator, 1
 	end__:
 
 	}
