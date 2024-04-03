@@ -7,6 +7,8 @@
 #include "../ex6/ex6.h"
 #include "../ex7/ex7.h"
 #include "../ex8/ex8.h"
+#include "../ex9/ex9.h"
+#include "../ex10/ex10.h"
 
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
@@ -325,6 +327,8 @@ TEST(ex4Test, test12) {
 	EXPECT_EQ(C, 562949953421310);
 }
 
+//ex5:
+
 TEST(ex5Test, test1) {
 	std::pair<int, int> result = countAmountOfZeroAndEven(24680);
 	EXPECT_EQ(result.first, 1);
@@ -342,6 +346,8 @@ TEST(ex5Test, test3) {
 	EXPECT_EQ(result.first, 1);
 	EXPECT_EQ(result.second, 1);
 }
+
+//ex6:
 
 TEST(ex6Test, test1) {
 	std::pair<int, std::string> result = GcdAndFraction(15, 10);
@@ -366,6 +372,8 @@ TEST(ex6Test, test4) {
 	EXPECT_EQ(result.second, "20576/1315");
 }
 
+//ex7:
+
 TEST(ex7Test, test1) {
 	EXPECT_EQ(NumInDeg(2, 3), 8);
 	EXPECT_EQ(NumInDeg(3, 4), 81);
@@ -380,6 +388,8 @@ TEST(ex7Test, test3) {
 	EXPECT_EQ(NumInDeg(2, -3), 0);
 }
 
+//ex8:
+
 TEST(ex8test, test1) {
 	std::pair<int, int> result = degOfTwo(10);
 	EXPECT_EQ(result.first, 3);
@@ -392,4 +402,61 @@ TEST(ex8test, test1) {
 
 TEST(ex8test, test2) {
 	ASSERT_THROW(degOfTwo(0), std::logic_error);
+}
+
+//ex9:
+
+TEST(ex9test, test1) {
+	std::vector <int> a = { 5, 1, 1, 2, 2, 3 };
+	int* ptr = a.data();
+	vectorRebuild(ptr);
+	auto it = a.end() - 2;
+	a.erase(it, a.end());
+	std::vector <int> b = { 3, 1, 2, 3 };
+
+	EXPECT_EQ(a, b);
+}
+
+TEST(ex9test, test2) {
+	std::vector <int> a = { 10, 1, 1, 2, 2, 3, 3, 4, 4, 5, 6};
+	int* ptr = a.data();
+	vectorRebuild(ptr);
+	auto it = a.end() - 4;
+	a.erase(it, a.end());
+	std::vector <int> b = { 6, 1, 2, 3, 4, 5, 6 };
+
+	EXPECT_EQ(a, b);
+}
+
+TEST(ex9test, test3) {
+	std::vector <int> a = { 3, 1, 1, 2 };
+	int* ptr = a.data();
+	vectorRebuild(ptr);
+	std::vector <int> b = { 2, 1, 2 };
+	auto it = a.end() - 1;
+	a.erase(it, a.end());
+	EXPECT_EQ(a, b);
+}
+
+TEST(ex10test, test1) {
+	std::vector <int> a = { 1, 2, 3 };
+	int* ptr1 = a.data();
+	std::vector <int> b = { 4, 5, 6 };
+	int* ptr2 = b.data();
+	std::vector <int> res = vectorMerge(ptr1, ptr2, a.size());
+	std::vector <int> test = { 1, 2, 3, 4, 5, 6 };
+
+	EXPECT_EQ(res, test);
+}
+
+TEST(ex10test, test2) {
+	std::vector <int> a = { 1, 2, 4 };
+	int* ptr1 = a.data();
+	std::vector <int> b = { 3, 5, 6 };
+	int* ptr2 = b.data();
+	std::vector <int> res = vectorMerge(ptr1, ptr2, a.size());
+	std::vector <int> test = { 1, 2, 3, 4, 5, 6 };
+
+	EXPECT_EQ(res, test);
+
 }
