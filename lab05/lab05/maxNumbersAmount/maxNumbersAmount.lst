@@ -1,0 +1,113 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/10/24 20:37:18
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+
+				PUBLIC _maxNum@8
+
+				.model flat
+
+ 00000000			.code
+
+ 00000000			 _maxNum@8 proc
+
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
+
+ 00000003  8B 45 0C			mov eax, dword ptr [ebp + 12] ; length
+ 00000006  8B 5D 08			mov ebx, dword ptr [ebp + 8] ; str pointer
+ 00000009  BE 00000000			mov esi, 0 ; str index
+ 0000000E  BF 00000000			mov edi, 0 ; current sequence length
+ 00000013  BA 00000000			mov edx, 0 ; max sequence length
+
+ 00000018				begin_:
+						
+ 00000018  3B F0				cmp esi, eax
+ 0000001A  74 20				je end_
+
+ 0000001C  8A 0C 33				mov cl, byte ptr [ebx + esi] ;char
+
+ 0000001F  80 F9 30				cmp cl, '0'
+ 00000022  7C 11				jl notADigit_
+
+ 00000024  80 F9 39				cmp cl, '9'
+ 00000027  7F 0C				jg notADigit_
+
+
+ 00000029  47					inc edi
+
+ 0000002A  3B FA				cmp edi, edx          ; Сравниваем текущую длину последовательности с максимальной
+ 0000002C  7F 02				jg changeMax_
+ 0000002E  EB 02				jmp nextChar_
+
+ 00000030				changeMax_:
+ 00000030  8B D7				mov edx, edi
+
+ 00000032				nextChar_:
+					
+ 00000032  46					inc esi
+ 00000033  EB E3				jmp begin_
+
+						
+
+ 00000035				notADigit_:
+ 00000035  BF 00000000				mov edi, 0            ; Сбрасываем текущую длину последовательности
+ 0000003A  EB F6				jmp nextChar_
+
+ 0000003C				end_:
+ 0000003C  8B E5				mov esp, ebp
+ 0000003E  5D					pop ebp
+ 0000003F  8B C2				mov eax, edx
+
+ 00000041  C2 0008			ret 8
+
+ 00000044			_maxNum@8 endp
+				end
+
+					
+
+	
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/10/24 20:37:18
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000044 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_maxNum@8  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000044 Public
+  begin_ . . . . . . . . . . . .	L Near	 00000018 _TEXT	
+  changeMax_ . . . . . . . . . .	L Near	 00000030 _TEXT	
+  nextChar_  . . . . . . . . . .	L Near	 00000032 _TEXT	
+  notADigit_ . . . . . . . . . .	L Near	 00000035 _TEXT	
+  end_ . . . . . . . . . . . . .	L Near	 0000003C _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

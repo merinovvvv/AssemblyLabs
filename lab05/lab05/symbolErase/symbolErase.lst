@@ -1,0 +1,88 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/15/24 13:30:02
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+				PUBLIC _DelSymbol@12
+				.model flat
+ 00000000			.code
+
+ 00000000			_DelSymbol@12 proc
+ 00000000  55			push ebp
+ 00000001  8B EC		mov ebp, esp
+ 00000003  8B 75 08		mov esi, [ebp+8] ; начало строки
+ 00000006  8B 4D 0C		mov ecx, [ebp+12] ; длина строки
+
+				;mov bl, [ebp+16] Ч удал€емый элемент
+ 00000009  BA 00000000		mov edx, 0
+ 0000000E			mainLoop_:
+ 0000000E  3B CA			cmp ecx, edx
+ 00000010  74 24			je end_
+ 00000012  8A 5D 10			mov bl, [ebp+16]
+ 00000015  3A 1C 16			cmp bl, [esi + edx]
+ 00000018  75 19			jne contMainLoop_
+ 0000001A  8B DA			mov ebx, edx
+ 0000001C  49				dec ecx
+ 0000001D			loopChange_:
+ 0000001D  3B D9			cmp ebx, ecx
+ 0000001F  74 0A			je preContMainLoop_
+ 00000021  8A 44 1E 01			mov al, [esi + ebx + 1]
+ 00000025  88 04 1E			mov [esi + ebx], al
+ 00000028  43				inc ebx
+ 00000029  EB F2			jmp loopChange_
+ 0000002B			preContMainLoop_:
+ 0000002B  C7 04 1E			mov dword ptr[esi + ebx], 0
+	   00000000
+ 00000032  4A				dec edx
+ 00000033			contMainLoop_:
+ 00000033  42				inc edx
+ 00000034  EB D8			jmp mainLoop_
+ 00000036			end_:
+ 00000036  8B C6		mov eax, esi
+ 00000038  5D			pop ebp
+ 00000039  C2 000C		ret 12 
+ 0000003C			_DelSymbol@12 endp
+				end
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/15/24 13:30:02
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000003C Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_DelSymbol@12  . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000003C Public
+  mainLoop_  . . . . . . . . . .	L Near	 0000000E _TEXT	
+  loopChange_  . . . . . . . . .	L Near	 0000001D _TEXT	
+  preContMainLoop_ . . . . . . .	L Near	 0000002B _TEXT	
+  contMainLoop_  . . . . . . . .	L Near	 00000033 _TEXT	
+  end_ . . . . . . . . . . . . .	L Near	 00000036 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

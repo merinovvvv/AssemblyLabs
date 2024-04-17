@@ -9,6 +9,7 @@
 #include "../ex8/ex8.h"
 #include "../ex9/ex9.h"
 #include "../ex10/ex10.h"
+#include "../ex11/ex11.h"
 
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
@@ -438,6 +439,8 @@ TEST(ex9test, test3) {
 	EXPECT_EQ(a, b);
 }
 
+//ex10:
+
 TEST(ex10test, test1) {
 	std::vector <int> a = { 1, 2, 3 };
 	int* ptr1 = a.data();
@@ -459,4 +462,27 @@ TEST(ex10test, test2) {
 
 	EXPECT_EQ(res, test);
 
+}
+
+//ex11:
+
+TEST(ex11test, test1) {
+	std::vector<int> a = { 4, 7, 2 };
+	std::vector<int> b = { 7, 4, 15 };
+	std::vector<int> c = { 4, 7 };
+	EXPECT_EQ(arrayIntersection(a, b, c), 1);
+}
+
+TEST(ex11test, test2) {
+	std::vector<int> a = { 4, 7, 2 };
+	std::vector<int> b = { 7, 4, 15 };
+	std::vector<int> c = { 4, 7, 7 };
+	EXPECT_EQ(arrayIntersection(a, b, c), 0);
+}
+
+TEST(ex11test, test3) {
+	std::vector<int> a = { 4, 7, 2 };
+	std::vector<int> b = { 7, 4, 15 };
+	std::vector<int> c = { 4, 5 };
+	EXPECT_EQ(arrayIntersection(a, b, c), 0);
 }

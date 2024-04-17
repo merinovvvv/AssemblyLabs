@@ -1,0 +1,99 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/10/24 23:41:27
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+
+				PUBLIC _capitals
+
+				.model flat
+
+ 00000000			.code
+
+ 00000000			_capitals proc
+
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
+
+ 00000003  8B 45 08			mov eax, dword ptr [ebp + 8] ;str ptr
+ 00000006  8B 5D 0C			mov ebx, dword ptr [ebp + 12] ;length
+
+ 00000009  BE 00000000			mov esi, 0 ;str index
+ 0000000E  8A 0C 30			mov cl, byte ptr [eax + esi] ;char
+ 00000011  80 F9 61			cmp cl, 97
+ 00000014  7C 0B			jl nextCheck_
+ 00000016  80 F9 7A			cmp cl, 122
+ 00000019  7F 06			jg nextCheck_
+ 0000001B  80 E9 20			sub cl, 32
+ 0000001E  88 0C 30			mov byte ptr[eax + esi], cl ; «аписываем обратно в пам€ть измененное значение cl
+
+ 00000021				nextCheck_:
+ 00000021  46					inc esi
+ 00000022  3B F3				cmp esi, ebx
+ 00000024  74 24				je end_
+ 00000026  8A 0C 30				mov cl, byte ptr [eax + esi] ;char
+ 00000029  80 F9 20				cmp cl, 32
+ 0000002C  74 02				je begin_
+ 0000002E  EB F1				jmp nextCheck_
+
+ 00000030				begin_:
+ 00000030  46					inc esi
+ 00000031  3B F3				cmp esi, ebx
+ 00000033  74 15				je end_
+ 00000035  8A 0C 30				mov cl, byte ptr [eax + esi] ;char
+ 00000038  80 F9 61				cmp cl, 97
+ 0000003B  7C E4				jl nextCheck_
+ 0000003D  80 F9 7A				cmp cl, 122
+ 00000040  7F DF				jg nextCheck_
+ 00000042  80 E9 20				sub cl, 32
+ 00000045  88 0C 30				mov byte ptr[eax + esi], cl ; «аписываем обратно в пам€ть измененное значение cl
+ 00000048  EB D7				jmp nextCheck_
+					
+ 0000004A				end_:
+ 0000004A  8B E5				mov esp, ebp
+ 0000004C  5D					pop ebp
+ 0000004D  C3					ret
+
+ 0000004E			_capitals endp
+				end
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/10/24 23:41:27
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000004E Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_capitals  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000004E Public
+  nextCheck_ . . . . . . . . . .	L Near	 00000021 _TEXT	
+  begin_ . . . . . . . . . . . .	L Near	 00000030 _TEXT	
+  end_ . . . . . . . . . . . . .	L Near	 0000004A _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

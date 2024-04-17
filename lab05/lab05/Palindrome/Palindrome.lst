@@ -1,0 +1,83 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/08/24 12:23:30
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+				
+				PUBLIC @isPalindrome@8
+				
+				.MODEL FLAT
+				
+ 00000000			.code
+				
+ 00000000			@isPalindrome@8 PROC
+				    
+ 00000000  8B D9		    mov ebx, ecx ;first param
+ 00000002  8B C2		    mov eax, edx ;second param
+ 00000004  48			    dec eax
+ 00000005  BE 00000000		    mov esi, 0 ; index begin
+ 0000000A  8B F8		    mov edi, eax ; index end
+				
+ 0000000C			isPalindromeCheck:
+ 0000000C  3B F7		    cmp esi, edi
+ 0000000E  7D 0E		    jge isPalindrome
+				
+ 00000010  8A 04 33		    mov al, byte PTR [ebx + esi ]
+ 00000013  8A 0C 3B		    mov cl, byte PTR [ebx + edi ]
+ 00000016  3A C1		    cmp al, cl
+ 00000018  75 0A		    jne notPalindrome
+				
+ 0000001A  46			    inc esi
+ 0000001B  4F			    dec edi
+ 0000001C  EB EE		    jmp isPalindromeCheck
+				
+ 0000001E			isPalindrome:
+ 0000001E  B8 00000001		    mov eax, 1
+ 00000023  C3			    ret
+ 00000024			notPalindrome:
+ 00000024  B8 00000000		    mov eax, 0
+ 00000029  C3			    ret
+ 0000002A			@isPalindrome@8 ENDP
+				
+				END
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/08/24 12:23:30
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002A Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+@isPalindrome@8  . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002A Public
+  isPalindromeCheck  . . . . . .	L Near	 0000000C _TEXT	
+  isPalindrome . . . . . . . . .	L Near	 0000001E _TEXT	
+  notPalindrome  . . . . . . . .	L Near	 00000024 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors
