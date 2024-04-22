@@ -1,0 +1,131 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 23:03:46
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+				.model flat
+				public _CreateVectorB
+
+ 00000000				.data
+ 00000000 00000000			count dd 0
+ 00000004 00000000			inner_counter dd 0
+ 00000008 00000000			N dd 0
+ 0000000C 00000000			M dd 0
+ 00000010 00000000			cur dd 0
+ 00000000				.code
+ 00000000			_CreateVectorB proc
+
+
+ 00000000  8B 44 24 08			mov eax, [esp + 8]
+ 00000004  A3 00000008 R		mov N, eax
+ 00000009  8B 44 24 0C			mov eax, [esp + 12]
+ 0000000D  A3 0000000C R		mov M, eax
+ 00000012  8B 5C 24 04			mov ebx, [esp + 4] 
+ 00000016  8B 74 24 10			mov esi, [esp + 16]
+ 0000001A  33 D2			xor edx, edx
+ 0000001C  33 C9			xor ecx, ecx
+ 0000001E  33 FF			xor edi, edi
+
+
+ 00000020			cycle :
+ 00000020  B8 00000000			mov eax, 0
+ 00000025  A3 00000004 R		mov inner_counter, eax
+ 0000002A  8B F9			mov edi, ecx
+ 0000002C  0F AF 3D			imul edi, M
+	   0000000C R
+ 00000033  6B FF 04			imul edi, edi, 4; first elem index
+ 00000036  8B 04 3B			mov eax, [ebx][edi]
+ 00000039  A3 00000010 R		mov cur, eax
+ 0000003E  BA 00000001			mov edx, 1
+
+ 00000043			rows_eq:
+ 00000043  83 C7 04			add edi, 4
+ 00000046  8B 04 3B			mov eax, [ebx][edi]
+ 00000049  3B 05 00000010 R		cmp eax, cur
+ 0000004F  75 11			jne skip
+ 00000051  8B 15 00000000 R		mov edx, count
+ 00000057  89 0C 96			mov[esi][edx * 4], ecx
+ 0000005A  FF 05 00000000 R		inc count
+ 00000060  EB 3E			jmp exit_
+ 00000062			skip:
+ 00000062  42				inc edx
+ 00000063  3B 15 0000000C R		cmp edx, M
+ 00000069  7C D8			jl rows_eq
+
+
+ 0000006B  8B F9		mov edi, ecx
+ 0000006D  0F AF 3D		imul edi, M
+	   0000000C R
+ 00000074  6B FF 04		imul edi, edi, 4
+
+ 00000077  FF 05 00000004 R	inc inner_counter
+ 0000007D  A1 00000004 R	mov eax, inner_counter
+ 00000082  3B 05 0000000C R	cmp eax, M
+ 00000088  74 16		je exit_
+ 0000008A  6B C0 04		imul eax, eax, 4
+ 0000008D  03 F8		add edi, eax
+ 0000008F  8B 04 3B		mov eax, [ebx][edi]
+ 00000092  A3 00000010 R	mov cur, eax
+ 00000097  8B 15 00000004 R	mov edx, inner_counter
+ 0000009D  42			inc edx
+ 0000009E  EB A3		jmp rows_eq
+
+
+
+ 000000A0			exit_:
+ 000000A0  33 D2		xor edx, edx
+ 000000A2  33 FF		xor edi, edi
+ 000000A4  41			inc ecx
+ 000000A5  3B 0D 00000008 R	cmp ecx, N
+ 000000AB  0F 8C FFFFFF6F	jl cycle
+ 000000B1  A1 00000000 R	mov eax, count
+ 000000B6  C3			ret
+ 000000B7			_CreateVectorB endp
+				end
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 23:03:46
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000014 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000B7 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_CreateVectorB . . . . . . . . .	P Near	 00000000 _TEXT	Length= 000000B7 Public
+  cycle  . . . . . . . . . . . .	L Near	 00000020 _TEXT	
+  rows_eq  . . . . . . . . . . .	L Near	 00000043 _TEXT	
+  skip . . . . . . . . . . . . .	L Near	 00000062 _TEXT	
+  exit_  . . . . . . . . . . . .	L Near	 000000A0 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+M  . . . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+N  . . . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+count  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+cur  . . . . . . . . . . . . . .	DWord	 00000010 _DATA	
+inner_counter  . . . . . . . . .	DWord	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors

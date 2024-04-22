@@ -1,0 +1,83 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 21:59:46
+asmFunc.asm						     Page 1 - 1
+
+
+				.686
+
+				public @calculateSqrt@8
+
+				.model flat
+
+ 00000000			.code
+
+ 00000000				@calculateSqrt@8 proc
+ 00000000  9B DB E3			finit  
+ 00000003  D9 02			fld dword ptr[edx] 
+ 00000005  D9 02			fld dword ptr[edx]
+ 00000007				_loop:
+
+ 00000007  D9 E8				fld1
+ 00000009  D9 E8				fld1
+ 0000000B  DE C1				fadd
+ 0000000D  DE F9				fdivp st(1), st(0) ; x/2 a
+ 0000000F  D9 C0				fld st(0) ; x/2 x/2 a
+
+ 00000011  D9 E8				fld1
+ 00000013  D9 E8				fld1
+ 00000015  DE C1				fadd
+ 00000017  DE C9				fmul ; x x/2 a
+ 00000019  D9 C2				fld st(2)
+ 0000001B  D9 E8				fld1
+ 0000001D  D9 E8				fld1
+ 0000001F  DE C1				fadd
+
+ 00000021  DE F9				fdivp st(1), st(0) ; a/2 x/2 x a
+
+ 00000023  DE F1				fdivrp
+ 00000025  DE C1				faddp st(1), st(0)
+				   
+ 00000027  E2 DE				loop _loop
+
+ 00000029  C3					ret
+ 0000002A				@calculateSqrt@8 endp
+
+				END
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 21:59:46
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002A Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+@calculateSqrt@8 . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002A Public
+  _loop  . . . . . . . . . . . .	L Near	 00000007 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

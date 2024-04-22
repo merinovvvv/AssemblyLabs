@@ -7,48 +7,45 @@ extern "C" float __fastcall calculateSqrt(int, float*);
 float CalculateSqrt(int n, float* a) {
     float variable = *a;
     __asm {
-        finit
-        mov esi, dword ptr[a]
-        mov ecx, n
+        finit  // Инициализация сопроцессора
+        mov esi, dword ptr[a]  // Загрузка адреса массива в регистр esi
+        mov ecx, n  // Загрузка количества итераций в регистр ecx
         _loop :
-        fld dword ptr[esi]
-            fld1
-            fld1
-            fadd
+            fld dword ptr[esi]  // Загрузка значения из памяти в стек FPU
+            fld1 //загрузка 1
+            fld1 //загрузка 1
+            fadd  // Сложение двух верхних значений в стеке FPU
 
-            fdivp st(1), st(0)
-            fld dword ptr[variable]
+            fdivp st(1), st(0)  // Деление двух верхних значений в стеке FPU
+            fld dword ptr[variable]  // Загрузка переменной variable в стек FPU
 
             fld1
             fld1
             fadd
             fld dword ptr[esi]
 
-            fmulp st(1), st(0)
+            fmulp st(1), st(0)  // Умножение двух верхних значений в стеке FPU
             fdivp st(1), st(0)
             faddp st(1), st(0)
-            fstp dword ptr[esi]
-            loop _loop
+            fstp dword ptr[esi]  // Сохранение верхнего значения стека FPU в память
+            loop _loop  // Повторение цикла ecx раз
     }
     return *a;
 }
 
 int main() {
-    /*float a = 4.0;
-    int n = 5;
-    float result = CalculateSqrt(n, &a);
-    std::cout << "Result of function: " << result << ' ' << "Difference: " << std::sqrt(2) - result;*/
-
-    float* a = new float(2.0);
+    float* a = new float(4.0);
     int n = 5;
 
-    float result;
-    __asm {
-        mov ecx, n
-        mov edx, dword ptr[a]
-        call calculateSqrt
-        fstp dword ptr[result]
-    }
+    //float result;
+    //__asm {
+    //    mov ecx, n  // Загрузка количества итераций в регистр ecx
+    //    mov edx, dword ptr[a]  // Загрузка адреса числа a в регистр edx
+    //    call calculateSqrt  // Вызов функции calculateSqrt
+    //    fstp dword ptr[result]
+    //}
+
+    float result = calculateSqrt(n, a);
     std::cout << result;
     return 0;
 }
