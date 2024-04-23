@@ -25,8 +25,8 @@ _CreateVectorB proc
 	mov edi, [ebp + 20] ; *B
 
 	;2 регистра поход по A
-	;1 регистра проход по B
-	;2 регистра на хранение массивов
+    ;1 регистра проход по B
+    ;2 регистра на хранение массивов
 
 	mov eax, 0 ;i
 	mov ebx, 0 ;j
@@ -73,11 +73,11 @@ _CreateVectorB proc
 
 	vecWrite_:
 
-		mov tmp, ebx ; для временного хранения eax
+		mov tmp, ebx ; ; для временного хранения eax
 		mov ebx, index
 		
 		;mov tmp2, edx
-		;mov edx, [edi]     ; загружаем указатель на массив указателей (int*)
+		;mov edx, [edi]     ;разыменовываем указатель
 
 		mov dword ptr [edx + ebx * 4], eax
 		inc index

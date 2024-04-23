@@ -1,0 +1,218 @@
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/23/24 21:18:04
+asmFunc.asm						     Page 1 - 1
+
+
+				;можно 10 пожалуйста =)
+				.686
+				.model flat
+				public _CreateVectorB
+
+ 00000000				.data
+
+ 00000000 00000000			index dd ?
+ 00000004 00000000			tmp dd ?
+ 00000008 00000000			tmpEsi dd ?
+ 0000000C 00000000			tmpEdi dd ?
+ 00000010 00000000			tmpEax dd ?
+					
+ 00000000				.code
+ 00000000			_CreateVectorB proc
+
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
+
+
+ 00000003  8B 5D 08			mov ebx, dword ptr [ebp + 8] ;A
+ 00000006  8B 45 0C			mov eax, dword ptr [ebp + 12] ;N
+ 00000009  8B 55 10			mov edx, dword ptr [ebp + 16] ;M
+ 0000000C  8B 4D 14			mov ecx, dword ptr [ebp + 20] ;*B
+
+ 0000000F  BE 00000000			mov esi, 0 ;i
+ 00000014  BF 00000000			mov edi, 0 ;j
+
+
+
+ 00000019  57				push edi ;j
+
+ 0000001A  A3 00000004 R			mov tmp, eax
+ 0000001F  58					pop eax
+ 00000020  40					inc eax
+ 00000021  50					push eax
+ 00000022  A1 00000004 R			mov eax, tmp
+
+ 00000027				cycle1_:
+ 00000027  3B F0				cmp esi, eax; while i < N
+ 00000029  0F 84 000000F4			je finish_
+
+ 0000002F				cycle2_:
+						
+
+ 0000002F  3B FA				cmp edi, edx ; while j < M
+ 00000031  74 76				je addI_
+
+ 00000033				cycle3_:
+
+ 00000033  89 1D 00000004 R			mov tmp, ebx
+ 00000039  5B					pop ebx ;j
+						;inc ebx ;k = j + 1
+
+
+ 0000003A  3B DA				cmp ebx, edx ; while k < M
+ 0000003C  53					push ebx
+ 0000003D  8B 1D 00000004 R			mov ebx, tmp
+
+						;mov eax, tmp
+ 00000043  74 7E				je addJ_
+
+
+						;cmp [ebx + (esi * edx * 4) + (edi * 4)], [ebx + (esi * edx * 4) + ([ebp + 8] * 4)]:
+						;cmp [ebx + 4 * (edx * esi + edi)], [ebx + 4 * (edx * esi + [ebp + 8])]
+
+						;first
+
+ 00000045  89 1D 00000004 R			mov tmp, ebx
+ 0000004B  89 35 00000008 R			mov tmpEsi, esi
+ 00000051  0F AF F2				imul esi, edx ; esi * edx
+ 00000054  03 F7				add esi, edi ;esi * edx + edi
+
+
+						;error
+ 00000056  6B F6 04				imul esi, 4 ;4 * (esi * edx + edi)
+
+ 00000059  03 DE				add ebx, esi ;ebx + 4 * (edx * esi + edi)
+ 0000005B  A3 00000010 R			mov tmpEax, eax
+ 00000060  8B 03				mov eax, [ebx]
+ 00000062  8B 1D 00000004 R			mov ebx, tmp
+ 00000068  8B 35 00000008 R			mov esi, tmpEsi
+
+						;second
+
+
+						;error
+ 0000006E  89 1D 00000004 R			mov tmp, ebx
+ 00000074  89 35 00000008 R			mov tmpEsi, esi
+ 0000007A  0F AF F2				imul esi, edx ; esi * edx
+ 0000007D  89 3D 0000000C R			mov tmpEdi, edi
+ 00000083  5F					pop edi
+ 00000084  03 F7				add esi, edi ;esi * edx + k
+ 00000086  6B F6 04				imul esi, 4 ;4 * (esi * edx + k)
+ 00000089  03 DE				add ebx, esi ; ebx + 4 * (edx * esi + k)
+ 0000008B  8B 35 00000008 R			mov esi, tmpEsi
+ 00000091  57					push edi
+ 00000092  8B 3D 0000000C R			mov edi, tmpEdi
+
+ 00000098  3B 03				cmp eax, dword ptr [ebx]
+ 0000009A  8B 1D 00000004 R			mov ebx, tmp
+ 000000A0  A1 00000010 R			mov eax, tmpEax
+						
+ 000000A5  74 45				je vecWrite_
+ 000000A7  EB 2F				jmp addK_
+
+ 000000A9				addI_:
+ 000000A9  46					inc esi
+ 000000AA  BF 00000000				mov edi, 0
+ 000000AF  A3 00000004 R			mov tmp, eax
+ 000000B4  58					pop eax
+ 000000B5  8B C7				mov eax, edi
+ 000000B7  40					inc eax
+ 000000B8  50					push eax
+ 000000B9  A1 00000004 R			mov eax, tmp
+ 000000BE  E9 FFFFFF64				jmp cycle1_
+
+
+ 000000C3				addJ_:
+ 000000C3  47					inc edi
+ 000000C4  A3 00000004 R			mov tmp, eax
+ 000000C9  58					pop eax
+ 000000CA  8B C7				mov eax, edi
+ 000000CC  40					inc eax
+ 000000CD  50					push eax
+ 000000CE  A1 00000004 R			mov eax, tmp
+ 000000D3  E9 FFFFFF57				jmp cycle2_
+
+ 000000D8				addK_:
+ 000000D8  89 1D 00000004 R			mov tmp, ebx
+ 000000DE  5B					pop ebx
+ 000000DF  43					inc ebx
+ 000000E0  53					push ebx
+ 000000E1  8B 1D 00000004 R			mov ebx, tmp
+ 000000E7  E9 FFFFFF47				jmp cycle3_
+
+ 000000EC				vecWrite_:
+
+ 000000EC  89 1D 00000004 R			mov tmp, ebx
+ 000000F2  8B 1D 00000000 R			mov ebx, index
+ 000000F8  89 34 99				mov [ecx + ebx * 4], esi
+ 000000FB  8B 1D 00000004 R			mov ebx, tmp
+ 00000101  FF 05 00000000 R			inc index
+
+ 00000107  46					inc esi
+ 00000108  BF 00000000				mov edi, 0
+ 0000010D  A3 00000004 R			mov tmp, eax
+ 00000112  58					pop eax
+ 00000113  B8 00000001				mov eax, 1
+ 00000118  50					push eax
+ 00000119  A1 00000004 R			mov eax, tmp
+
+ 0000011E  E9 FFFFFF04				jmp cycle1_
+
+
+ 00000123				finish_:
+						
+ 00000123  8B E5				mov esp, ebp
+ 00000125  5D					pop ebp
+ 00000126  C3					ret
+
+ 00000127			_CreateVectorB endp
+				end
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/23/24 21:18:04
+asmFunc.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000014 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000127 Para	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_CreateVectorB . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000127 Public
+  cycle1_  . . . . . . . . . . .	L Near	 00000027 _TEXT	
+  cycle2_  . . . . . . . . . . .	L Near	 0000002F _TEXT	
+  cycle3_  . . . . . . . . . . .	L Near	 00000033 _TEXT	
+  addI_  . . . . . . . . . . . .	L Near	 000000A9 _TEXT	
+  addJ_  . . . . . . . . . . . .	L Near	 000000C3 _TEXT	
+  addK_  . . . . . . . . . . . .	L Near	 000000D8 _TEXT	
+  vecWrite_  . . . . . . . . . .	L Near	 000000EC _TEXT	
+  finish_  . . . . . . . . . . .	L Near	 00000123 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+index  . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+tmpEax . . . . . . . . . . . . .	DWord	 00000010 _DATA	
+tmpEdi . . . . . . . . . . . . .	DWord	 0000000C _DATA	
+tmpEsi . . . . . . . . . . . . .	DWord	 00000008 _DATA	
+tmp  . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 23:03:46
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/23/24 16:59:14
 asmFunc.asm						     Page 1 - 1
 
 
@@ -53,36 +53,34 @@ asmFunc.asm						     Page 1 - 1
  00000069  7C D8			jl rows_eq
 
 
- 0000006B  8B F9		mov edi, ecx
- 0000006D  0F AF 3D		imul edi, M
+ 0000006B  8B F9			mov edi, ecx
+ 0000006D  0F AF 3D			imul edi, M
 	   0000000C R
- 00000074  6B FF 04		imul edi, edi, 4
+ 00000074  6B FF 04			imul edi, edi, 4
 
- 00000077  FF 05 00000004 R	inc inner_counter
- 0000007D  A1 00000004 R	mov eax, inner_counter
- 00000082  3B 05 0000000C R	cmp eax, M
- 00000088  74 16		je exit_
- 0000008A  6B C0 04		imul eax, eax, 4
- 0000008D  03 F8		add edi, eax
- 0000008F  8B 04 3B		mov eax, [ebx][edi]
- 00000092  A3 00000010 R	mov cur, eax
- 00000097  8B 15 00000004 R	mov edx, inner_counter
- 0000009D  42			inc edx
- 0000009E  EB A3		jmp rows_eq
-
-
+ 00000077  FF 05 00000004 R		inc inner_counter
+ 0000007D  A1 00000004 R		mov eax, inner_counter
+ 00000082  3B 05 0000000C R		cmp eax, M
+ 00000088  74 16			je exit_
+ 0000008A  6B C0 04			imul eax, eax, 4
+ 0000008D  03 F8			add edi, eax
+ 0000008F  8B 04 3B			mov eax, [ebx][edi]
+ 00000092  A3 00000010 R		mov cur, eax
+ 00000097  8B 15 00000004 R		mov edx, inner_counter
+ 0000009D  42				inc edx
+ 0000009E  EB A3			jmp rows_eq
 
  000000A0			exit_:
- 000000A0  33 D2		xor edx, edx
- 000000A2  33 FF		xor edi, edi
- 000000A4  41			inc ecx
- 000000A5  3B 0D 00000008 R	cmp ecx, N
- 000000AB  0F 8C FFFFFF6F	jl cycle
- 000000B1  A1 00000000 R	mov eax, count
- 000000B6  C3			ret
+ 000000A0  33 D2			xor edx, edx
+ 000000A2  33 FF			xor edi, edi
+ 000000A4  41				inc ecx
+ 000000A5  3B 0D 00000008 R		cmp ecx, N
+ 000000AB  0F 8C FFFFFF6F		jl cycle
+ 000000B1  A1 00000000 R		mov eax, count
+ 000000B6  C3				ret
  000000B7			_CreateVectorB endp
 				end
-Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/22/24 23:03:46
+Microsoft (R) Macro Assembler Version 14.39.33523.0	    04/23/24 16:59:14
 asmFunc.asm						     Symbols 2 - 1
 
 
