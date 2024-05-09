@@ -27,14 +27,14 @@ public @calculateSqrt@8
 		fld1
 		fadd
 
-		fdivp st(1), st(0) ; a/2 x/2 x a
+		fdivp st(1), st(0) ; a/2 x x/2 x a
 
 		fdivrp
 		faddp st(1), st(0)
    
 		loop _loop
 
-		ret
+		;ret
 	@calculateSqrt@8 endp
 
 END
